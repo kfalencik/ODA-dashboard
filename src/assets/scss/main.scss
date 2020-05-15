@@ -29,6 +29,16 @@ $screen-xlarge: 1200px;
   width: 100%;
 }
 
+.panel {
+  margin: rem(35) 0;
+  border-bottom: 1px dashed lighten($color-black, 50%);
+  padding-bottom: rem(35);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
 // Main styles
 *, *::before, *::after {
   box-sizing: border-box;
@@ -47,6 +57,10 @@ body {
 
 a {
   text-decoration: none;
+}
+
+p {
+  margin: rem(15) 0;
 }
 
 // Headings
@@ -75,6 +89,7 @@ h3, .h3 {
 h4, .h4 {
   font-size: rem(18);
   font-weight: 500;
+  margin: 0 0 rem(15);
 }
 
 h5, .h5 {
@@ -129,6 +144,10 @@ h5, .h5 {
       border-color: darken($color-secondary, 10%);
     }
   }
+
+  &--disabled {
+    opacity: 0.2;
+  }
 }
 
 // Table
@@ -149,4 +168,18 @@ table {
   td, th {
     padding: 10px;
   }
+}
+
+// Form 
+
+.input {
+  display: inline-flex;
+  height: rem(35);
+  align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: rem(2);
+  border: 1px solid $color-grey;
+  color: $color-black;
+  padding: 0 .5em;
 }
