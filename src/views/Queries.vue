@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Queries</h1>
     <p>Please enter words you want to query or use to generate words button to use random set of words</p>
-    <button @click="generateWords">Generate new words</button>
+    <button class="button button--primary" @click="generateWords">Generate new words</button>
   </div>
 </template>
 
