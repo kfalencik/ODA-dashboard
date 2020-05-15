@@ -13,7 +13,6 @@ export default new Vuex.Store({
     currentQueries: [],
     history: [],
     statTotalQueries: 0,
-    statTotalWords: 0,
     statTotalResults: 0
   },
   mutations: {
@@ -25,10 +24,13 @@ export default new Vuex.Store({
     // Will need more mutations for objects in the future
   },
   actions: {
-    async askOwl(context, word) {
-      await owlbot.define(word).then(function(result){
-        console.log(result);
-        context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
+    async generateWords(context) {
+      // For now we are using predefined words
+      context.state.currentWords.forEach(word => {
+        owlbot.define(word).then(function(result){
+          context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
+          context.commit('setField', ['statTotalResults', context.state.statTotalQueries + result.definitions.length]);
+        });
       });
     }
   }

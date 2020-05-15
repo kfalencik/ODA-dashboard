@@ -11,9 +11,6 @@ import Sidebar from '@/components/Sidebar';
 export default {
   components: {
     Sidebar
-  },
-  mounted() {
-    this.$store.dispatch('askOwl', 'cat'); 
   }
 }
 </script>
