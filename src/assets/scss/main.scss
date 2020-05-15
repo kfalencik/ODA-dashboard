@@ -9,16 +9,36 @@ $color-tertiary: #f5f5f0;
 $color-black: #29291b;
 $color-white: #fafafa;
 
-//Grid
+// Grid
 $screen-small: 460px;
 $screen-medium: 768px;
 $screen-large: 1024px;
 $screen-xlarge: 1200px;
 
 // Main styles
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
-  font-size: 14px;
-  line-height: 1.4;
+  margin: 0;
+  padding: 0;
   color: $color-black;
   font-family: $font-body;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.4;
+  background-color: $color-white;
+}
+
+a {
+  text-decoration: none;
+}
+
+// Headings
+
+h1, h2, h3, h4, h5,
+.h1, .h2, .h3, .h4, .h5 {
+  font-weight: 100;
+  color: $color-primary;
 }
