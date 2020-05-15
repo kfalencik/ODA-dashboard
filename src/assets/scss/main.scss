@@ -23,7 +23,7 @@ $screen-xlarge: 1200px;
 
 // Container 
 .container {
-  padding: 50px;
+  padding: rem(50);
   margin: 0 auto;
   width: 100%;
 }
@@ -36,7 +36,7 @@ $screen-xlarge: 1200px;
 body {
   margin: 0;
   padding: 0;
-  color: $color-black;
+  color: $color-primary;
   font-family: $font-body;
   font-size: rem(14);
   font-weight: 300;
