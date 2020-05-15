@@ -1,5 +1,5 @@
 <template>
-  <main id="app" class="container">
+  <main id="app">
     <Sidebar />
     <router-view />
   </main>
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  #app {
     display: flex;
   }
 </style>
