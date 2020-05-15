@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentWords: ['cat', 'owl', 'dog', 'meow', 'hoot', 'bark', 'ship', 'anchor', 'car', 'engine'],
+    currentWords: [],
     currentQueries: [],
     history: [],
     statTotalQueries: 0,
@@ -19,17 +19,39 @@ export default new Vuex.Store({
     // Universal field mutatation
     setField(state, data) {
       state[data[0]] = data[1];
+    },
+    addHistoryEntry(state, entry) {
+      state.history.push(entry);
     }
-
-    // Will need more mutations for objects in the future
   },
   actions: {
-    async generateWords(context) {
-      // For now we are using predefined words
+    async lookupWords(context, words = false) {
+      if (words) {
+        // If user entered words use these, instead of generating them
+        context.commit('setField', ['currentWords', words]);
+      } else {
+        // Fake word generator
+        const generatedWords = ['cat', 'owl', 'dog', 'meow', 'hoot', 'bark', 'ship', 'anchor', 'car', 'engine']
+        context.commit('setField', ['currentWords', generatedWords]);
+      }
+      
+      // Query owlbot per each word to get results
       context.state.currentWords.forEach(word => {
-        owlbot.define(word).then(function(result){
+        owlbot.define(word).then(result => {
+          console.log(word, result);
+          
+          // History entry
+          const historyEntry = {
+            word: word,
+            timestamp: new Date(),
+            result: result
+          }
+
+          context.commit('addHistoryEntry', historyEntry);
+
+          // Increment statistics
           context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
-          context.commit('setField', ['statTotalResults', context.state.statTotalQueries + result.definitions.length]);
+          context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
         });
       });
     }
