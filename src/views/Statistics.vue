@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <section class="container">
     <h1>Statistics</h1>
     <div class="statistics">
       <div class="statistics__item">
@@ -10,7 +10,7 @@
         Total results found: <strong>{{totalResults}}</strong>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

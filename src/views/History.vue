@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <section class="container">
     <h1>History</h1>
     <div class="history" v-if="history.length">
       <table>
@@ -18,7 +18,7 @@
       <p>Query history is empty at the moment. Please make some queries first and come back later.</p>
       <router-link class="button" to="/queries">Make a query</router-link>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

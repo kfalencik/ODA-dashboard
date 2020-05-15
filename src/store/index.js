@@ -9,6 +9,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    userWords: [],
     currentWords: [],
     currentQueries: [],
     history: [],
@@ -22,6 +23,12 @@ export default new Vuex.Store({
     },
     addHistoryEntry(state, entry) {
       state.history.push(entry);
+    },
+    addUserWord(state, word) {
+      state.userWords.push(word.toLowerCase());
+    },
+    removeUserWord(state, word) {
+      state.userWords = state.userWords.filter(userWord => userWord !== word);
     }
   },
   actions: {
@@ -29,6 +36,7 @@ export default new Vuex.Store({
       if (words) {
         // If user entered words use these, instead of generating them
         context.commit('setField', ['currentWords', words]);
+        
       } else {
         // Fake word generator
         const generatedWords = ['cat', 'owl', 'dog', 'meow', 'hoot', 'bark', 'ship', 'anchor', 'car', 'engine']
@@ -46,12 +54,15 @@ export default new Vuex.Store({
             timestamp: new Date(),
             result: result
           }
-
           context.commit('addHistoryEntry', historyEntry);
 
           // Increment statistics
           context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
           context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
+
+        }, reason => {
+          // Something went wrong here, display error in the console
+          console.log(reason);
         });
       });
     }
