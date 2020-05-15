@@ -47,22 +47,22 @@ export default {
     &__list {
       list-style: none;
       padding: 0;
-      margin: 30px 25px;
+      margin: rem(30) rem(25);
     }
 
     &__list-item {
       a {
-        margin: 15px 0;
-        padding: 2px 0;
+        margin: rem(15) 0;
+        padding: rem(2) 0;
         display: block;
         color: $color-black;
-        font-weight: 500;
-        border-bottom: 1px solid transparent;
+        font-weight: 300;
+        border-bottom: rem(1) solid transparent;
       }
 
       &--active {
         a {
-          border-color: $color-black;
+          border-color: lighten($color-black, 40%);
         }
       }
     }

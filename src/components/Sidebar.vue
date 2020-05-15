@@ -22,7 +22,8 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    width: 300px;
+    min-width: rem(300);
+    padding: rem(20) 0;
     background: $color-tertiary;
   }
 </style>
