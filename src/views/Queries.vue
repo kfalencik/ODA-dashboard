@@ -19,9 +19,9 @@ export default {
       // Generate random words
       this.$store.dispatch('lookupWords'); 
     },
-    submitWords(words) {
+    submitWords() {
       // Submit user defined words
-      this.$store.dispatch('lookupWords', userWords); 
+      this.$store.dispatch('lookupWords', this.userWords); 
     }
   }
 }
