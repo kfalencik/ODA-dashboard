@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     userWords: [],
     currentWords: [],
-    currentQueries: [],
+    currentQuery: null,
     history: [],
     statTotalQueries: 0,
     statTotalResults: 0
@@ -51,36 +51,39 @@ export default new Vuex.Store({
 
       // Query owlbot per each word to get results
       const owlQuery = async () => {
+
+        // Turn each request to async promise
         const promises = context.state.currentWords.map(async (word) => { 
           await owlbot.define(word).then(result => {
-          if (result.definitions) {
-            console.log(word, result);
-          
-            // History entry
-            queryHistory.words.push({
-              word: word,
-              result: result
-            });
+            if (result.definitions) {
+              console.log(word, result);
+            
+              // History entry
+              queryHistory.words.push({
+                word: word,
+                result: result
+              });
 
-            // Increment statistics
-            context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
-            context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
-          }
+              // Increment statistics
+              context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
+              context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
+            }
+          });
         });
-      });
 
-      await Promise.all(promises);
+        // Wait for all requests to finish before continuing
+        await Promise.all(promises);
 
-      console.log(queryHistory.words.length);
-      if (queryHistory.words.length) {
-        // Get end time
-        queryHistory.endTime = new Date();
+        if (queryHistory.words.length) {
+          // Get end time
+          queryHistory.endTime = new Date();
 
-        // Time difference in seconds
-        queryHistory.time = Math.round(queryHistory.endTime - queryHistory.startTime) / 1000;
+          // Time difference in seconds
+          queryHistory.time = Math.round(queryHistory.endTime - queryHistory.startTime) / 1000;
 
-        // Add query to history
-        context.commit('addHistoryEntry', queryHistory);
+          // Add query to history and set as current
+          context.commit('addHistoryEntry', queryHistory);
+          context.commit('setField', ['currentQuery', queryHistory]);
         }
       }
 

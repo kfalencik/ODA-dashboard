@@ -1,14 +1,15 @@
 <template>
   <div class="tag tag--cool">
     <span class="tag__label">{{word}}</span>
-    <span class="tag__remover" @click.prevent.stop="removeWord" >x</span>
+    <span class="tag__remover" @click.prevent.stop="removeWord" v-if="button">x</span>
   </div>
 </template>
 
 <script>
 export default {
   props: [
-    'word'
+    'word',
+    'button'
   ],
   methods: {
     removeWord() {
@@ -26,7 +27,7 @@ export default {
     line-height: 1.75em;
     width: auto;
     color: $color-white;
-    border-radius: 1px;
+    border-radius: rem(1);
     font-weight: 500;
     margin-right: rem(10);
     font-weight: 100;
