@@ -43,28 +43,48 @@ export default new Vuex.Store({
         context.commit('setField', ['currentWords', generatedWords]);
       }
       
+      // Initial query values
+      let queryHistory = {
+        startTime: new Date(),
+        words: []
+      }
+
       // Query owlbot per each word to get results
-      context.state.currentWords.forEach(word => {
-        owlbot.define(word).then(result => {
-          console.log(word, result);
+      const owlQuery = async () => {
+        const promises = context.state.currentWords.map(async (word) => { 
+          await owlbot.define(word).then(result => {
+          if (result.definitions) {
+            console.log(word, result);
           
-          // History entry
-          const historyEntry = {
-            word: word,
-            timestamp: new Date(),
-            result: result
+            // History entry
+            queryHistory.words.push({
+              word: word,
+              result: result
+            });
+
+            // Increment statistics
+            context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
+            context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
           }
-          context.commit('addHistoryEntry', historyEntry);
-
-          // Increment statistics
-          context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
-          context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
-
-        }, reason => {
-          // Something went wrong here, display error in the console
-          console.log(reason);
         });
       });
+
+      await Promise.all(promises);
+
+      console.log(queryHistory.words.length);
+      if (queryHistory.words.length) {
+        // Get end time
+        queryHistory.endTime = new Date();
+
+        // Time difference in seconds
+        queryHistory.time = Math.round(queryHistory.endTime - queryHistory.startTime) / 1000;
+
+        // Add query to history
+        context.commit('addHistoryEntry', queryHistory);
+        }
+      }
+
+      owlQuery();
     }
   }
 })
