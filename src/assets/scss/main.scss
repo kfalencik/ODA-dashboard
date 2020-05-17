@@ -142,6 +142,7 @@ h5, .h5 {
     &:hover {
       color: darken($color-secondary, 10%);
       border-color: darken($color-secondary, 10%);
+      background-color: $color-white;
     }
   }
 

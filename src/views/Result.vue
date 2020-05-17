@@ -10,7 +10,7 @@
         <label>Type
           <select class="input" @change="filterResults" v-model="filterType">
             <option value="none">All</option>
-            <option v-for="(type, index)  in types" :key="`type-${index}`" :value="type">{{type}}</option>
+            <option v-for="(type, index)  in types" :key="`type-${index}`" :value="type">{{type | capitalize}}</option>
           </select>
         </label>
 
@@ -33,7 +33,7 @@
       <div class="result__definitions">
         <div class="result__definitions-item" v-for="(definition, definitionIndex) in word.result.definitions" :key="`definition-${definitionIndex}`">
           <div class="result__definition-body">
-            <strong>{{definition.type}}</strong>
+            <strong>{{definition.type | capitalize}}</strong>
             <p>{{definition.definition}} {{definition.emoji}}</p>
             <template v-if="definition.example">
               Example: <em v-html="exampleQuote(definition.example)"></em>
@@ -43,6 +43,8 @@
             <img width="100" v-if="definition.image_url" :src="definition.image_url" :alt="`Example of ${word.word}`" />
           </div>
         </div>
+
+        <p v-if="!word.result.definitions.length">Sorry there are no results matching your filter criteria. Please try aggain</p>
       </div>
     </div>
   </section>

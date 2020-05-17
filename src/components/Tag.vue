@@ -1,6 +1,6 @@
 <template>
   <div class="tag tag--cool">
-    <span class="tag__label">{{word}}</span>
+    <span class="tag__label">{{word | capitalize}}</span>
     <span class="tag__remover" @click.prevent.stop="removeWord" v-if="button">x</span>
   </div>
 </template>

@@ -7,9 +7,13 @@
 
       <div class="queries__results panel" v-if="currentQuery">
         <h2 class="h4">Results</h2>
-
+        <p>We found these results for your queried words. Please click on any of the links below to find out more.</p>
         <nav>
-          <router-link :to="`/queries/${word.word}`" v-for="(word, index) in currentQuery.words" :key="`results-word-${index}`">{{word.word | capitalize}}</router-link>
+          <ol>
+            <li v-for="(word, index) in currentQuery.words" :key="`results-word-${index}`">
+              <router-link :to="`/queries/${word.word}`">{{word.word | capitalize}}</router-link>
+            </li>
+          </ol>
         </nav>
       </div>
 
@@ -22,6 +26,7 @@
         </div>
         <input class="queries__word-input input" type="text" placeholder="Add a word" @keyup.prevent.stop="addWord($event)" v-model="currentWord" />
         <button class="button button--primary" :class="{'button--disabled': !userWords.length}" @click.prevent="submitWords">Submit words</button>
+        <button class="button button--secondary" :class="{'button--disabled': !userWords.length}" @click.prevent="clearWords">Clear all</button>
       </div>
 
       <div class="panel">
@@ -78,8 +83,21 @@ export default {
       this.$store.dispatch('lookupWords'); 
     },
     submitWords() {
+      // Check if the last word was added properly
+      if (!this.userWords.includes(this.currentWord.toLowerCase()) && this.currentWord.replace(/\s/g, '').length) {
+        // Submit new word
+        this.$store.commit('addUserWord', this.currentWord);
+      }
+
+      // Empty input field
+      this.currentWord = '';
+
       // Submit user defined words
       this.$store.dispatch('lookupWords', this.userWords); 
+    },
+    clearWords() {
+      // Submit user defined words
+      this.$store.commit('setField', ['userWords', []]);
     }
   }
 }
@@ -95,6 +113,10 @@ export default {
     &__word-input {
       display: block;
       margin-bottom: 20px;
+    }
+
+    button {
+      margin-right: rem(15);
     }
   }
 </style>
