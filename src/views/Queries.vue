@@ -8,23 +8,9 @@
       <div class="queries__results panel" v-if="currentQuery">
         <h2 class="h4">Results</h2>
 
-        <div class="queries__results-item" v-for="(word, index) in currentQuery.words" :key="`results-word-${index}`">
-          <Collapsible :word="`${word.word} (${word.result.definitions.length})`">
-            <div v-if="word.result.pronunciation" class="queries__results-pronunciation">/{{word.result.pronunciation}}/</div>
-            <div class="queries__results-definitions">
-              <div class="queries__results-definitions-item" v-for="(definition, definitionIndex) in word.result.definitions" :key="`results-definition-${definitionIndex}`">
-                <div class="queries__results-definition-body">
-                  <strong>{{definition.type}}</strong>
-                  <p>{{definition.definition}} {{definition.emoji}}</p>
-                  Example: <em v-html="exampleQuote(definition.example)"></em>
-                </div>
-                <div class="queries__results-definition-image">
-                  <img width="100" v-if="definition.image_url" :src="definition.image_url" :alt="`Example of ${word.word}`" />
-                </div>
-              </div>
-            </div>
-          </Collapsible>
-        </div>
+        <nav>
+          <router-link :to="`/queries/${word.word}`" v-for="(word, index) in currentQuery.words" :key="`results-word-${index}`">{{word.word | capitalize}}</router-link>
+        </nav>
       </div>
 
       <div class="panel">
@@ -34,7 +20,7 @@
         <div class="queries__word-cloud">
           <Tag v-for="(word, index) in userWords" :key="`word-${index}`" :word="word" :button="true" />
         </div>
-        <input class="input" type="text" placeholder="Add a word" @keyup.prevent.stop="addWord($event)" v-model="currentWord" />
+        <input class="queries__word-input input" type="text" placeholder="Add a word" @keyup.prevent.stop="addWord($event)" v-model="currentWord" />
         <button class="button button--primary" :class="{'button--disabled': !userWords.length}" @click.prevent="submitWords">Submit words</button>
       </div>
 
@@ -48,7 +34,6 @@
 </template>
 
 <script>
-import Collapsible from '@/components/Collapsible';
 import Tag from '@/components/Tag';
 
 export default {
@@ -67,8 +52,7 @@ export default {
     }
   },
   components: {
-    Tag,
-    Collapsible
+    Tag
   },
   methods: {
     addWord(event) {
@@ -96,9 +80,6 @@ export default {
     submitWords() {
       // Submit user defined words
       this.$store.dispatch('lookupWords', this.userWords); 
-    },
-    exampleQuote(example) {
-      return `"${example}"`;
     }
   }
 }
@@ -111,19 +92,9 @@ export default {
       margin-bottom: 20px;
     }
 
-    input {
+    &__word-input {
       display: block;
       margin-bottom: 20px;
-    }
-
-    &__results-definitions-item {
-      padding: rem(20) 0;
-      display: flex;
-      justify-content: space-between;
-
-      img {
-        border-radius: 100%;
-      }
     }
   }
 </style>
