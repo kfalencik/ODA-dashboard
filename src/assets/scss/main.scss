@@ -64,7 +64,6 @@ p {
 }
 
 // Headings
-
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
   font-weight: 300;
@@ -99,7 +98,6 @@ h5, .h5 {
 }
 
 // Buttons
-
 .button {
   display: inline-flex;
   box-sizing: border-box;
@@ -152,7 +150,6 @@ h5, .h5 {
 }
 
 // Table
-
 table {
   width: 100%;
   text-align: left;
@@ -172,7 +169,6 @@ table {
 }
 
 // Form 
-
 .input {
   display: inline-flex;
   height: rem(35);
@@ -183,4 +179,15 @@ table {
   border: 1px solid $color-grey;
   color: $color-black;
   padding: 0 .5em;
+}
+
+// Animations
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  to {
+      transform: rotate(1turn);
+  }
 }

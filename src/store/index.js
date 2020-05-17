@@ -14,7 +14,8 @@ export default new Vuex.Store({
     currentQuery: null,
     history: [],
     statTotalQueries: 0,
-    statTotalResults: 0
+    statTotalResults: 0,
+    loading: false
   },
   mutations: {
     // Universal field mutatation
@@ -33,6 +34,9 @@ export default new Vuex.Store({
   },
   actions: {
     async lookupWords(context, words = false) {
+      // Show loading screen while getting results
+      context.commit('setField', ['loading', true]);
+
       if (words) {
         // If user entered words use these, instead of generating them
         context.commit('setField', ['currentWords', words]);
@@ -73,6 +77,8 @@ export default new Vuex.Store({
 
         // Wait for all requests to finish before continuing
         await Promise.all(promises);
+
+        context.commit('setField', ['loading', false]);
 
         if (queryHistory.words.length) {
           // Get end time

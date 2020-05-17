@@ -83,17 +83,19 @@ export default {
       this.$store.dispatch('lookupWords'); 
     },
     submitWords() {
-      // Check if the last word was added properly
-      if (!this.userWords.includes(this.currentWord.toLowerCase()) && this.currentWord.replace(/\s/g, '').length) {
-        // Submit new word
-        this.$store.commit('addUserWord', this.currentWord);
-      }
+      if (this.userWords.length) {
+        // Check if the last word was added properly
+        if (!this.userWords.includes(this.currentWord.toLowerCase()) && this.currentWord.replace(/\s/g, '').length) {
+          // Submit new word
+          this.$store.commit('addUserWord', this.currentWord);
+        }
 
-      // Empty input field
-      this.currentWord = '';
+        // Empty input field
+        this.currentWord = '';
 
-      // Submit user defined words
-      this.$store.dispatch('lookupWords', this.userWords); 
+        // Submit user defined words
+        this.$store.dispatch('lookupWords', this.userWords); 
+      } 
     },
     clearWords() {
       // Submit user defined words
