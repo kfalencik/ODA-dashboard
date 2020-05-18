@@ -9,6 +9,7 @@ const owlbot = Owlbot('5280aef0e64aaba62479086168b956b1d3d557e2');
 
 Vue.use(Vuex);
 
+// Vuex persist to store date in localstore
 const vuexPersist = new VuexPersist({
   key: 'oda-dashboard',
   storage: window.localStorage
@@ -112,7 +113,7 @@ export default new Vuex.Store({
         // Time difference in seconds
         queryHistory.time = Math.round(queryHistory.endTime - queryHistory.startTime) / 1000;
 
-        // Add query to history and set as current
+        // Add query to history and set as current query
         context.commit('addHistoryEntry', queryHistory);
         context.commit('setField', ['currentQuery', queryHistory]);
         context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);

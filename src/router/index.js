@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
+  // Create all necessary routes
   const routes = [
   {
     path: '/',
@@ -29,6 +30,7 @@ Vue.use(VueRouter)
     component: () => import('../views/Queries.vue')
   },
   {
+    // Dynamic path for word results
     path: '/queries/:word',
     name: 'Result',
     // Lazy load component on route change

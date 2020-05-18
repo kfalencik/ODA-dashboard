@@ -23,6 +23,7 @@ export default {
   ],
   methods: {
     calculateWidth(value) {
+      // Get percentage against the total value
       return Math.floor(value / this.total * 100);
     }
   }

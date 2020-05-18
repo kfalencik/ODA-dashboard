@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     activeMenuItem() {
+      // Find active route and set as active
       return this.$route.name;
     }
   }

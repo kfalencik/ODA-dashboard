@@ -10,23 +10,18 @@
       <div class="statistics__item">
         Total time spent querying: <strong>{{totalTimeQuerying()}}s</strong>
       </div>
-
       <div class="statistics__item">
         Shortest query: <strong>{{shortestQuery()}}s</strong>
       </div>
-
       <div class="statistics__item">
         Longest query: <strong>{{longestQuery()}}s</strong>
       </div>
-
       <div class="statistics__item">
         Total results found: <strong>{{totalResults}}</strong>
       </div>
-
       <div class="statistics__item">
         Most results per word: <strong>{{mostResults()}}</strong>
       </div>
-
        <div class="statistics__item">
         Most searched word: <strong>{{mostSearchedWord() | capitalize}}</strong>
       </div>  
@@ -60,6 +55,7 @@ export default {
     wordsWithResults() {
       let words = 0;
 
+      // Get all the words that have at least one result
       this.history.forEach(query => {
         query.words.forEach(word => {
           if (word.result.definitions.length) {
@@ -73,6 +69,7 @@ export default {
     customQueries() {
       let queries = 0;
 
+      // Get queries that used user defined words
       this.history.forEach(query => {
         if (query.type === 'custom') {
           queries++;
@@ -82,21 +79,25 @@ export default {
       return queries;
     },
     totalTimeQuerying() {
+      // Sum all queries time elapsed
       return [...this.history].reduce((accumulator, currentValue) => accumulator + currentValue.time, 0).toFixed(2);
     },
     shortestQuery() {
+      // Find the shortest query
       return Math.min(...this.history.map(item => item.time)).toFixed(2);
     },
     longestQuery() {
+      // Find the longest query
       return Math.max(...this.history.map(item => item.time)).toFixed(2);
     },
     mostResults() {
+      // Find a word with most results
       return Math.max(...this.history.map(query => Math.max(...query.words.map(word => word.result.definitions.length))));
     },
     mostSearchedWord() {
+      // Aggregate all searched words into one array
       const aggregatedResults = [];
 
-      // Aggregate all searched words into one array
       this.history.forEach(query => {
         aggregatedResults.push(...query.words.map(item => item.word));
       });

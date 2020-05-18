@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar">
     <img :src="require('@/assets/images/logo.png')" width="200" alt="Logo" />
-
     <Navigation />
   </div>
 </template>
