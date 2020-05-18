@@ -88,7 +88,7 @@ export default new Vuex.Store({
               }
             });  
           });
-          context.commit('setField', ['statTotalQueries', context.state.statTotalWords + 1]);
+          context.commit('setField', ['statTotalWords', context.state.statTotalWords + 1]);
         });
 
         // Wait for all requests to finish before continuing
