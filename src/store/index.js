@@ -1,11 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VuexPersist from 'vuex-persist';
 import Owlbot from 'owlbot-js';
 
 // Owlbot connection (This API key should be hidden using ENV variables for production and it's only visible here for demonstration purposes)
 const owlbot = Owlbot('5280aef0e64aaba62479086168b956b1d3d557e2');
 
 Vue.use(Vuex);
+
+const vuexPersist = new VuexPersist({
+  key: 'oda-dashboard',
+  storage: window.localStorage
+})
 
 export default new Vuex.Store({
   state: {
@@ -105,5 +111,6 @@ export default new Vuex.Store({
 
       owlQuery();
     }
-  }
+  },
+  plugins: [vuexPersist.plugin]
 })
