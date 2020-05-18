@@ -26,7 +26,11 @@
       <div class="statistics__item">
         Most results per word: <strong>{{mostResults()}}</strong>
       </div>
-    </div>
+
+       <div class="statistics__item">
+        Most searched word: <strong>{{mostSearchedWord() | capitalize}}</strong>
+      </div>  
+    </div>    
   </section>
 </template>
 
@@ -87,9 +91,18 @@ export default {
       return Math.max(...this.history.map(item => item.time));
     },
     mostResults() {
-      return Math.max(...this.history.map(query => Math.max(...query.words.map(word => {
-        return word.result.definitions.length;
-      }))));
+      return Math.max(...this.history.map(query => Math.max(...query.words.map(word => word.result.definitions.length))));
+    },
+    mostSearchedWord() {
+      const aggregatedResults = [];
+
+      // Aggregate all searched words into one array
+      this.history.forEach(query => {
+        aggregatedResults.push(...query.words.map(item => item.word));
+      });
+
+      // Find most occuring word in the aggregated results array
+      return aggregatedResults.sort((a,b) => aggregatedResults.filter(v => v===a).length - aggregatedResults.filter(v => v===b).length).pop();
     }
   }
 }
