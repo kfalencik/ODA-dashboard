@@ -28,7 +28,9 @@
             <td>{{index + 1}}</td>
             <td>
               <ol>
-                <li v-for="(word, wordIndex) in item.words" :key="'word-' + wordIndex">{{word.result.definitions[0].emoji}} {{word.word | capitalize}} ({{word.result.definitions.length}})</li>
+                <li v-for="(word, wordIndex) in item.words" :key="'word-' + wordIndex">
+                  <span v-if="word.result.definitions.length">{{word.result.definitions[0].emoji}}</span>
+                  {{word.word | capitalize}} ({{word.result.definitions.length}})</li>
               </ol>
             </td>
             <td>{{item.startTime | dateFromatter}}</td>

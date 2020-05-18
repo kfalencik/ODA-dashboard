@@ -24,6 +24,7 @@ export default new Vuex.Store({
       state[data[0]] = data[1];
     },
     addHistoryEntry(state, entry) {
+      console.log(entry);
       state.history.push(entry);
     },
     addUserWord(state, word) {
@@ -70,37 +71,36 @@ export default new Vuex.Store({
               });
 
               // Increment statistics
-              context.commit('setField', ['statTotalQueries', context.state.statTotalWords + 1]);
               context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
             }
           }, () => {
             // If word has not been found add a word with no results
             queryHistory.words.push({
               word: word,
-              result: null
-            });
-
-            context.commit('setField', ['statTotalQueries', context.state.statTotalWords + 1]);
+              result: {
+                definitions: []
+              }
+            });  
           });
+          context.commit('setField', ['statTotalQueries', context.state.statTotalWords + 1]);
         });
 
         // Wait for all requests to finish before continuing
         await Promise.all(promises);
 
+        // Hide loading screen
         context.commit('setField', ['loading', false]);
 
-        if (queryHistory.words.length) {
-          // Get end time
-          queryHistory.endTime = new Date();
+        // Get end time
+        queryHistory.endTime = new Date();
 
-          // Time difference in seconds
-          queryHistory.time = Math.round(queryHistory.endTime - queryHistory.startTime) / 1000;
+        // Time difference in seconds
+        queryHistory.time = Math.round(queryHistory.endTime - queryHistory.startTime) / 1000;
 
-          // Add query to history and set as current
-          context.commit('addHistoryEntry', queryHistory);
-          context.commit('setField', ['currentQuery', queryHistory]);
-          context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
-        }
+        // Add query to history and set as current
+        context.commit('addHistoryEntry', queryHistory);
+        context.commit('setField', ['currentQuery', queryHistory]);
+        context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
       }
 
       owlQuery();
