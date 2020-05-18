@@ -1,6 +1,8 @@
 <template>
   <section class="container" v-if="word.word">
     <h1>Reuslts for: {{ word.word | capitalize}} <span v-if="word.result.pronunciation" class="result__pronunciation">/{{word.result.pronunciation}}/</span></h1>
+    <router-link :to="'/queries'" class="button">Back to results</router-link>
+
     <div class="result">
       <div class="result__filters" v-if="definitions.length > 1">
         <label>Search definitions
@@ -47,6 +49,8 @@
         <p v-if="!word.result.definitions.length">Sorry there are no results matching your filter criteria. Please try aggain</p>
       </div>
     </div>
+
+    <router-link :to="'/queries'" class="button">Back to results</router-link>
   </section>
 </template>
 
@@ -178,5 +182,9 @@ export default {
         border-radius: 100%;
       }
     }
+  }
+
+  .button {
+    margin: rem(15) 0;
   }
 </style>
