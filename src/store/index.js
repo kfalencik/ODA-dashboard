@@ -14,6 +14,7 @@ export default new Vuex.Store({
     currentQuery: null,
     history: [],
     statTotalQueries: 0,
+    statTotalWords: 0,
     statTotalResults: 0,
     loading: false
   },
@@ -69,9 +70,17 @@ export default new Vuex.Store({
               });
 
               // Increment statistics
-              context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
+              context.commit('setField', ['statTotalQueries', context.state.statTotalWords + 1]);
               context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
             }
+          }, () => {
+            // If word has not been found add a word with no results
+            queryHistory.words.push({
+              word: word,
+              result: null
+            });
+
+            context.commit('setField', ['statTotalQueries', context.state.statTotalWords + 1]);
           });
         });
 
@@ -90,6 +99,7 @@ export default new Vuex.Store({
           // Add query to history and set as current
           context.commit('addHistoryEntry', queryHistory);
           context.commit('setField', ['currentQuery', queryHistory]);
+          context.commit('setField', ['statTotalQueries', context.state.statTotalQueries + 1]);
         }
       }
 
