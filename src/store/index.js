@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersist from 'vuex-persist';
 import Owlbot from 'owlbot-js';
+import axios from 'axios';
 
 // Owlbot connection (This API key should be hidden using ENV variables for production and it's only visible here for demonstration purposes)
 const owlbot = Owlbot('5280aef0e64aaba62479086168b956b1d3d557e2');
@@ -57,9 +58,10 @@ export default new Vuex.Store({
 
         queryHistory.type = 'custom';
       } else {
-        // Fake word generator
-        const generatedWords = ['cat', 'owl', 'dog', 'meow', 'hoot', 'bark', 'ship', 'anchor', 'car', 'engine']
-        context.commit('setField', ['currentWords', generatedWords]);
+        // Real random word generator
+        await axios.get('https://random-word-api.herokuapp.com/word?number=10').then(result => {
+          context.commit('setField', ['currentWords', result.data]);
+        });
 
         queryHistory.type = 'random';
       }

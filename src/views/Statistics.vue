@@ -82,13 +82,13 @@ export default {
       return queries;
     },
     totalTimeQuerying() {
-      return [...this.history].reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
+      return [...this.history].reduce((accumulator, currentValue) => accumulator + currentValue.time, 0).toFixed(2);
     },
     shortestQuery() {
-      return Math.min(...this.history.map(item => item.time));
+      return Math.min(...this.history.map(item => item.time)).toFixed(2);
     },
     longestQuery() {
-      return Math.max(...this.history.map(item => item.time));
+      return Math.max(...this.history.map(item => item.time)).toFixed(2);
     },
     mostResults() {
       return Math.max(...this.history.map(query => Math.max(...query.words.map(word => word.result.definitions.length))));
