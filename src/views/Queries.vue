@@ -96,6 +96,9 @@ export default {
 
         // Submit user defined words
         this.$store.dispatch('lookupWords', this.userWords); 
+
+        // Clear words after submit
+        this.clearWords();
       } 
     },
     clearWords() {
