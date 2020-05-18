@@ -11,8 +11,8 @@
         <nav>
           <ol>
             <li v-for="(word, index) in currentQuery.words" :key="`results-word-${index}`">
-              <router-link v-if="word.result.definitions.length" :to="`/queries/${word.word}`">{{word.word | capitalize}} ({{word.result.definitions.length}} results)</router-link>
-              <span v-else>{{word.word | capitalize}} - no results</span>
+              <router-link v-if="word.result.definitions.length" :to="`/queries/${word.word}`"><strong>{{word.word | capitalize}}</strong> ({{word.result.definitions.length}} results)</router-link>
+              <span v-else><strong>{{word.word | capitalize}}</strong> - no results</span>
             </li>
           </ol>
         </nav>
@@ -123,6 +123,17 @@ export default {
 
     button {
       margin-right: rem(15);
+    }
+
+    &__results {
+      li {
+        margin: rem(10) 0;
+        
+        a {
+          color: $color-primary;
+          text-decoration: underline;
+        }
+      }
     }
   }
 </style>
