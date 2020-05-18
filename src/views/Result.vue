@@ -30,6 +30,8 @@
             <option value="desc">Descending</option>
           </select>
         </label>
+
+        <button class="button button--secondary" @click="resetFilters">Reset</button>
       </div>
       
       <div class="result__definitions">
@@ -116,7 +118,6 @@ export default {
 
     // Initial filtering and sorting
     this.filterResults();
-    this.sortResults();
   },
   methods: {
     exampleQuote(example) {
@@ -171,6 +172,22 @@ export default {
           this.ordering === 'desc' ? this.word.result.definitions.sort((a, b) => (a.time < b.time) ? 1 : -1) : this.word.result.definitions.sort((a, b) => (a.time > b.time) ? 1 : -1);
           return;
       }
+    },
+    resetFilters() {
+      // Set default options
+      this.filterType = 'all';
+      this.filterDefinition = '';
+      this.sorting = 'type';
+      this.ordering = 'asc';
+
+      // Update state filters and sorting
+      this.$store.commit('setField', ['resultsFilterType', this.filterType]);
+      this.$store.commit('setField', ['resultsFilterDefinition', this.filterDefinition]);
+      this.$store.commit('setField', ['resultsSorting', this.sorting]);
+      this.$store.commit('setField', ['resultsOrdering', this.ordering]);
+
+      // Re-filter results with default options
+      this.filterResults();
     }
   }
 }
@@ -193,6 +210,10 @@ export default {
 
       label {
         margin-right: rem(15);
+      }
+
+      .button {
+        margin: 0;
       }
     }
 
