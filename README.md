@@ -1,4 +1,7 @@
 # oda-dashboard
+An Owlbot Disctionary API app that lets you look up words and their definitions. This app will also display statistics and keep track of your query history.
+
+Lives under https://oda-dashboard.netlify.app
 
 ## Project setup
 ```
