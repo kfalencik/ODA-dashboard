@@ -26,7 +26,8 @@ export default new Vuex.Store({
     loading: false,
     resultsFilterType: 'all',
     resultsSorting: 'type',
-    resultsOrdering: 'asc'
+    resultsOrdering: 'asc',
+    resultsFilterDefinition: ''
   },
   mutations: {
     // Universal field mutatation

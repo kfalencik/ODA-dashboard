@@ -86,6 +86,9 @@ export default {
     resultsFilterType() {
       return this.$store.state.resultsFilterType;
     },
+    resultsFilterDefinition() {
+      return this.$store.state.resultsFilterDefinition;
+    },
     resultsSorting() {
       return this.$store.state.resultsSorting;
     },
@@ -103,6 +106,9 @@ export default {
     if (this.types.includes(this.resultsFilterType)) {
       this.filterType = this.resultsFilterType;
     }
+
+    // Apply last keyword search
+    this.filterDefinition = this.resultsFilterDefinition;
 
     // Apply last sorting options
     this.sorting = this.resultsSorting;
@@ -122,6 +128,7 @@ export default {
 
         // Keep track of selected filtering options
         this.$store.commit('setField', ['resultsFilterType', this.filterType]);
+        this.$store.commit('setField', ['resultsFilterDefinition', this.filterDefinition]);
 
         // Brief mentions filtering by definition which I asumme means to search by keyword
         if (this.filterDefinition.replace(/\s/g, '').length) {
