@@ -45,20 +45,23 @@ export default new Vuex.Store({
       // Show loading screen while getting results
       context.commit('setField', ['loading', true]);
 
-      if (words) {
-        // If user entered words use these, instead of generating them
-        context.commit('setField', ['currentWords', words]);
-        
-      } else {
-        // Fake word generator
-        const generatedWords = ['cat', 'owl', 'dog', 'meow', 'hoot', 'bark', 'ship', 'anchor', 'car', 'engine']
-        context.commit('setField', ['currentWords', generatedWords]);
-      }
-      
       // Initial query values
       let queryHistory = {
         startTime: new Date(),
         words: []
+      }
+
+      if (words) {
+        // If user entered words use these, instead of generating them
+        context.commit('setField', ['currentWords', words]);
+
+        queryHistory.type = 'custom';
+      } else {
+        // Fake word generator
+        const generatedWords = ['cat', 'owl', 'dog', 'meow', 'hoot', 'bark', 'ship', 'anchor', 'car', 'engine']
+        context.commit('setField', ['currentWords', generatedWords]);
+
+        queryHistory.type = 'random';
       }
 
       // Query owlbot per each word to get results
