@@ -11,7 +11,7 @@
 
         <label>Type
           <select class="input" @change="filterResults" v-model="filterType">
-            <option value="none">All</option>
+            <option value="all">All</option>
             <option v-for="(type, index)  in types" :key="`type-${index}`" :value="type">{{type | capitalize}}</option>
           </select>
         </label>
@@ -61,7 +61,7 @@ export default {
     return {
       sorting: 'type',
       ordering: 'asc',
-      filterType: 'none',
+      filterType: 'all',
       filterDefinition: '',
       query: null,
       types: []
@@ -74,12 +74,23 @@ export default {
   },
   computed: {
     definitions() {
-      const currentQuery = JSON.parse(JSON.stringify(this.$store.state.currentQuery.words));
+      // Need to keep track of definitions
+      const currentQuery = [...this.$store.state.currentQuery.words];
       return currentQuery.filter(item => item.word === this.$route.params.word)[0].result.definitions;
     },
     word() {
+      // Set a new array value instead of the store variable reference
       const currentQuery = JSON.parse(JSON.stringify(this.$store.state.currentQuery.words));
       return currentQuery.filter(item => item.word === this.$route.params.word)[0];
+    },
+    resultsFilterType() {
+      return this.$store.state.resultsFilterType;
+    },
+    resultsSorting() {
+      return this.$store.state.resultsSorting;
+    },
+    resultsOrdering() {
+      return this.$store.state.resultsOrdering;
     }
   },
   mounted() {
@@ -88,7 +99,17 @@ export default {
     this.definitions.forEach(item => types.push(item.type));
     this.types = [...new Set(types)];
 
-    // Initial sorting
+    // Apply last type filter selection if still available
+    if (this.types.includes(this.resultsFilterType)) {
+      this.filterType = this.resultsFilterType;
+    }
+
+    // Apply last sorting options
+    this.sorting = this.resultsSorting;
+    this.ordering = this.resultsOrdering;
+
+    // Initial filtering and sorting
+    this.filterResults();
     this.sortResults();
   },
   methods: {
@@ -99,6 +120,9 @@ export default {
         // Get original data so we can re-filter results
         let query = this.definitions;
 
+        // Keep track of selected filtering options
+        this.$store.commit('setField', ['resultsFilterType', this.filterType]);
+
         // Brief mentions filtering by definition which I asumme means to search by keyword
         if (this.filterDefinition.replace(/\s/g, '').length) {
           query = this.definitions.filter(item => {
@@ -107,7 +131,7 @@ export default {
         }
 
         // Filter by definition type
-        if (this.filterType !== 'none') {
+        if (this.filterType !== 'all') {
           query = query.filter(item => {
             return item.type === this.filterType;
           });
@@ -121,6 +145,10 @@ export default {
         this.sortResults();
     },
     sortResults() {
+      // Keep track of selected filtering options
+      this.$store.commit('setField', ['resultsSorting', this.sorting]);
+      this.$store.commit('setField', ['resultsOrdering', this.ordering]);
+      
       // Sort and order results
       switch (this.sorting) {
         case 'type':

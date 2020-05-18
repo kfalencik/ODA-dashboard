@@ -23,7 +23,10 @@ export default new Vuex.Store({
     statTotalQueries: 0,
     statTotalWords: 0,
     statTotalResults: 0,
-    loading: false
+    loading: false,
+    resultsFilterType: 'all',
+    resultsSorting: 'type',
+    resultsOrdering: 'asc'
   },
   mutations: {
     // Universal field mutatation
