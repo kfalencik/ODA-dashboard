@@ -3,16 +3,28 @@
     <h1>Statistics</h1>
     <div class="statistics">
       <div class="statistics__diagrams">
-        <Diagram v-if="history.length" :title="'Queries made'" :total="history.length" :values="[customQueries(), history.length - customQueries()]" :labels="['Total queries made', 'Custom defined words queries', 'Randomly generater words queries']" />
+        <Diagram v-if="history.length" :title="'Queries made'" :total="history.length" :values="[customQueries(), history.length - customQueries()]" :labels="['Total queries made', 'Custom defined words', 'Randomly generated words']" />
         <Diagram v-if="totalWords" :title="'Queried words'" :total="totalWords" :values="[wordsWithResults(), totalWords - wordsWithResults()]" :labels="['Total words queried', 'Words with results', 'Words with no results']" />
       </div>
 
       <div class="statistics__item">
-        Total queries made: <strong>{{totalQueries}}</strong>
+        Total time spent querying: <strong>{{totalTimeQuerying()}}s</strong>
+      </div>
+
+      <div class="statistics__item">
+        Shortest query: <strong>{{shortestQuery()}}s</strong>
+      </div>
+
+      <div class="statistics__item">
+        Longest query: <strong>{{longestQuery()}}s</strong>
       </div>
 
       <div class="statistics__item">
         Total results found: <strong>{{totalResults}}</strong>
+      </div>
+
+      <div class="statistics__item">
+        Most results per word: <strong>{{mostResults()}}</strong>
       </div>
     </div>
   </section>
@@ -64,6 +76,20 @@ export default {
       });
     
       return queries;
+    },
+    totalTimeQuerying() {
+      return [...this.history].reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
+    },
+    shortestQuery() {
+      return Math.min(...this.history.map(item => item.time));
+    },
+    longestQuery() {
+      return Math.max(...this.history.map(item => item.time));
+    },
+    mostResults() {
+      return Math.max(...this.history.map(query => Math.max(...query.words.map(word => {
+        return word.result.definitions.length;
+      }))));
     }
   }
 }
@@ -73,6 +99,10 @@ export default {
   .statistics {
     &__diagrams {
       display: flex;
+    }
+
+    &__item {
+      margin: rem(10) 0;
     }
   }
 </style>
