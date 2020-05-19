@@ -37,7 +37,6 @@ export default new Vuex.Store({
       state[data[0]] = data[1];
     },
     addHistoryEntry(state, entry) {
-      console.log(entry);
       state.history.push(entry);
     },
     addUserWord(state, word) {
@@ -79,7 +78,6 @@ export default new Vuex.Store({
         const promises = context.state.currentWords.map(async (word) => { 
           await owlbot.define(word).then(result => {
             if (result.definitions) {
-              console.log(word, result);
             
               // History entry
               queryHistory.words.push({
