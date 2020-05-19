@@ -76,13 +76,15 @@ export default {
       transform: translateX(-100%);
       z-index: 999;
       background: $color-primary;
-      transition: all 0.3s ease-in-out;
       list-style: none;
       padding: rem(35) rem(20);
       margin: 0;
+      transition: all 0.3s ease-in-out;
+      opacity: 0;
 
        &--active {
         transform: translateX(0);
+        opacity: 1;
       }
 
       @media (min-width: $screen-large) {
@@ -95,6 +97,8 @@ export default {
         transition: none;
         top: auto;
         bottom: auto;
+        transition: none;
+        opacity: 1;
       }
     }
 

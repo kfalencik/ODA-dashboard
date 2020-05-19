@@ -196,8 +196,10 @@ export default {
 <style lang="scss" scoped>
   .result {
     &__pronunciation {
-      color: $color-grey;
+      color: darken($color-grey, 20%);
       margin-bottom: rem(25);
+      display: block;
+      margin-top: rem(10);
     }
 
     &__filters {
@@ -206,10 +208,33 @@ export default {
       border: rem(1) solid $color-grey;
       margin-bottom: rem(25);
       display: flex;
-      align-items: center;
+      align-items: flex-end;
+      flex-direction: column;
+
+      @media (min-width: $screen-large) {
+        align-items: center;
+        flex-direction: row;
+        align-items: center;
+      }
 
       label {
-        margin-right: rem(15);
+        width: 100%;
+        margin-bottom: rem(15);
+
+        @media (min-width: $screen-large) {
+          margin: 0 rem(15) 0 0;
+          width: auto;
+        }
+      }
+
+      .input {
+        width: 100%;
+        margin-top: rem(5);
+
+        @media (min-width: $screen-large) {
+          width: auto;
+          margin-top: 0;
+        }
       }
 
       .button {
@@ -227,8 +252,13 @@ export default {
     &__definitions-item {
       padding: rem(20) 0;
       display: flex;
+      flex-direction: column-reverse;
       justify-content: space-between;
-      border-bottom: solid 1px #e6e6e6;
+      border-bottom: rem(1) solid $color-grey;
+
+      @media (min-width: $screen-medium) {
+        flex-direction: row;
+      }
 
       &:last-child {
         border-bottom: none;
@@ -236,6 +266,11 @@ export default {
 
       img {
         border-radius: 100%;
+        margin-bottom: rem(15);
+
+        @media (min-width: $screen-medium) {
+          margin-top: 0;
+        }
       }
     }
   }
