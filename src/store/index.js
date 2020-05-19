@@ -88,7 +88,7 @@ export default new Vuex.Store({
               // Increment statistics
               context.commit('setField', ['statTotalResults', context.state.statTotalResults + result.definitions.length]);
             }
-          }, () => {
+          }).catch(() => {
             // If word has not been found add a word with no results
             queryHistory.words.push({
               word: word,
