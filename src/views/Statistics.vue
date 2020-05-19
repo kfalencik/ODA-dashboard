@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <h1>Statistics</h1>
-    <div class="statistics">
+    <div class="statistics" v-if="history.length">
       <div class="statistics__diagrams">
         <Diagram v-if="history.length" :title="'Queries made'" :total="history.length" :values="[customQueries(), history.length - customQueries()]" :labels="['Total queries made', 'Custom defined words', 'Randomly generated words']" />
         <Diagram v-if="totalWords" :title="'Queried words'" :total="totalWords" :values="[wordsWithResults(), totalWords - wordsWithResults()]" :labels="['Total words queried', 'Words with results', 'Words with no results']" />
@@ -26,6 +26,11 @@
         Most searched word: <strong>{{mostSearchedWord() | capitalize}}</strong>
       </div>  
     </div>    
+
+    <div v-else>
+      <p>There are no statistics available at the moment. Please make some queries first and come back later.</p>
+      <router-link class="button" to="/queries">Make a query</router-link>
+    </div>
   </section>
 </template>
 
