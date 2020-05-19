@@ -7,24 +7,12 @@
         <Diagram v-if="totalWords" :title="'Queried words'" :total="totalWords" :values="[wordsWithResults(), totalWords - wordsWithResults()]" :labels="['Total words queried', 'Words with results', 'Words with no results']" />
       </div>
 
-      <div class="statistics__item">
-        Total time spent querying: <strong>{{totalTimeQuerying()}}s</strong>
-      </div>
-      <div class="statistics__item">
-        Shortest query: <strong>{{shortestQuery()}}s</strong>
-      </div>
-      <div class="statistics__item">
-        Longest query: <strong>{{longestQuery()}}s</strong>
-      </div>
-      <div class="statistics__item">
-        Total results found: <strong>{{totalResults}}</strong>
-      </div>
-      <div class="statistics__item">
-        Most results per word: <strong>{{mostResults()}}</strong>
-      </div>
-       <div class="statistics__item">
-        Most searched word: <strong>{{mostSearchedWord() | capitalize}}</strong>
-      </div>  
+      <Statistic label="Total time spent querying" :value="`${totalTimeQuerying()}s`" />
+      <Statistic label="Shortest query" :value="`${shortestQuery()}s`" />
+      <Statistic label="Longest query" :value="`${longestQuery()}s`" />
+      <Statistic label="Total results found" :value="`${totalResults}`" />
+      <Statistic label="Most results per word" :value="`${mostResults()}`" />
+      <Statistic label="Most searched word" :value="`${mostSearchedWord()}`" />
     </div>    
 
     <div v-else>
@@ -36,11 +24,13 @@
 
 <script>
 import Diagram from '@/components/Diagram';
+import Statistic from '@/components/Statistic';
 
 export default {
   name: 'Statistics',
   components: {
-    Diagram
+    Diagram,
+    Statistic
   },
   computed: {
     totalQueries() {
@@ -123,10 +113,6 @@ export default {
       @media (min-width: $screen-medium) {
         flex-direction: row;
       }
-    }
-
-    &__item {
-      margin: rem(10) 0;
     }
   }
 </style>
