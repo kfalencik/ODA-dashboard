@@ -17,6 +17,7 @@ const vuexPersist = new VuexPersist({
 
 export default new Vuex.Store({
   state: {
+    menuState: false,
     userWords: [],
     currentWords: [],
     currentQuery: null,

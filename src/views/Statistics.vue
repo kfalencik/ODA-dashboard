@@ -113,6 +113,11 @@ export default {
   .statistics {
     &__diagrams {
       display: flex;
+      flex-direction: column;
+
+      @media (min-width: $screen-medium) {
+        flex-direction: row;
+      }
     }
 
     &__item {

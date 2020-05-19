@@ -15,6 +15,10 @@ export default {
     Sidebar,
     Loading
   },
+  created() {
+    // Hide menu if active
+    this.$store.commit('setField', ['menuState', this.menuState]);
+  },
   computed: {
     loading() {
       return this.$store.state.loading;
@@ -26,5 +30,10 @@ export default {
 <style lang="scss" scoped>
   #app {
     display: flex;
+    flex-direction: column;
+
+    @media (min-width: $screen-large) {
+      flex-direction: row;
+    }
   }
 </style>

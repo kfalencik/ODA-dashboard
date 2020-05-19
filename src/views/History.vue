@@ -2,7 +2,6 @@
   <section class="container">
     <h1>History</h1>
     <div class="history" v-if="queryHistory.length">
-
       <div class="history__filters">
         <label>Sort by
           <select class="input" @change="sortHistory()" v-model="sorting">

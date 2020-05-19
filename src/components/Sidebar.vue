@@ -18,11 +18,29 @@ export default {
 <style lang="scss" scoped>
   .sidebar {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    min-width: rem(300);
-    padding: rem(20) 0;
+    justify-content: center;
+    padding: rem(15) 0;
     background: $color-tertiary;
+    border-bottom: rem(1) solid $color-grey;
+
+    @media (min-width: $screen-large) {
+      height: 100vh;
+      min-width: rem(300);
+      padding: rem(20) 0;
+      flex-direction: column;
+      border: none;
+      justify-content: start;
+    }
+
+    img {
+      width: auto;
+      height: 50px;
+
+      @media (min-width: $screen-large) {
+        width: 200px;
+        height: auto;
+      }
+    }
   }
 </style>

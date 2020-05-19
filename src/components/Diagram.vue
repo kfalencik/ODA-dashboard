@@ -34,9 +34,13 @@ export default {
   .diagram {  
     background-color: $color-tertiary;
     padding: rem(20);
-    margin: rem(20) rem(20) rem(20) 0;
+    margin: rem(20) 0;
     flex: 1;
     border: rem(1) solid $color-grey;
+
+    @media (min-width: $screen-medium) {
+      margin: rem(20) rem(20) rem(20) 0;
+    }
 
     &:last-child {
       margin-right: 0;
