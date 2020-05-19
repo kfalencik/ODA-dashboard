@@ -31,6 +31,7 @@ export default {
       flex-direction: column;
       border: none;
       justify-content: start;
+      position: fixed;
     }
 
     img {

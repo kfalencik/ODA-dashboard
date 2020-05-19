@@ -82,6 +82,13 @@ export default {
     generateWords() {
       // Generate random words
       this.$store.dispatch('lookupWords'); 
+
+      // Scroll to the top of the page so user can see the new result set
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth' 
+      });
     },
     submitWords() {
       if (this.userWords.length) {

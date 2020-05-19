@@ -34,6 +34,7 @@ $screen-xlarge: 1200px;
 
   @media (min-width: $screen-large) {
     padding: rem(50);
+    margin-left: rem(300);
   }
 }
 
@@ -69,6 +70,7 @@ body {
   font-weight: 300;
   line-height: 1.4;
   background-color: $color-white;
+  scroll-behavior: smooth;
 }
 
 a {
